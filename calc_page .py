@@ -4,11 +4,9 @@ import plotly.express as px
 import requests
 import json
 
-# --- GEMINI AI CONFIGURATION ---
-# IMPORTANT: Your API key is visible here. For production, use st.secrets.
-# I have left your key here as requested, but please be aware of the security risks.
+#  GEMINI AI CONFIGURATION 
 GEMINI_API_KEY = "AIzaSyCx7gfigfB0nEu2nZ-LGUNLnAuKcN8iWrk" 
-# --- END GEMINI CONFIGURATION ---
+# END GEMINI CONFIGURATION 
 
 
 def get_gemini_response(chat_history: list):
@@ -176,13 +174,16 @@ if submitted and total_renewable <= 100 and (cars > 0 or passengers > 0 or conta
 
     df = pd.DataFrame(data, columns=["Type", "Quantity", "Total CO₂ (kg)", "Total Coal CO₂ (kg)", "Green Energy CO₂ (kg)"])
     st.table(df.style.format("{:.2f}", subset=df.columns[2:]))
+  
+
+    st.markdown("""<small><div style="display: flex; justify-content: space-between; color: grey"><div>Per unit CO₂ emissions <br>Car: 0.87 kg <br>Passenger: 0.25 kg <br>Container: 10.21 kg</div><div style="text-align: right;">Coal per unit <br>Car: 1.25 kg <br>Passenger: 0.36 kg <br>Container: 14.71 kg</div></div></small><br>""", unsafe_allow_html=True)
     reduction = (1 - total_green / total_co2) * 100 if total_co2 != 0 else 0
 
     tab1, tab2, tab3 = st.tabs(["📊 Comparison", "📈 Visualization", "🧠 AI Chat"])
 
-    # ++++++++++++++++++++++++++++++++++++++
-    # --- RESTORED ORIGINAL COMPARISON TAB ---
-    # ++++++++++++++++++++++++++++++++++++++
+
+    # RESTORED ORIGINAL COMPARISON TAB 
+
     with tab1:
         col1, col2 = st.columns(2)
 
@@ -232,9 +233,9 @@ if submitted and total_renewable <= 100 and (cars > 0 or passengers > 0 or conta
         fig.update_layout(xaxis_title="Transport Type", yaxis_title="CO₂ Emissions (kg)", title_x=0.3, plot_bgcolor='rgba(0,0,0,0)', bargap=0.3)
         st.plotly_chart(fig, use_container_width=True)
 
-    # ++++++++++++++++++++++++++++++++++++++
-    # --- AI CHAT TAB WITH CLICKABLE EXPANDER ---
-    # ++++++++++++++++++++++++++++++++++++++
+
+    # AI CHAT TAB
+
     with tab3:
         st.subheader("🤖 AI-Powered Analysis & Chat")
 
